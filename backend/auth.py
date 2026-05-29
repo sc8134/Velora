@@ -18,7 +18,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-_DATA_FILE    = os.path.join(os.path.dirname(__file__), "users.json")
+_DATA_FILE    = os.path.join(os.environ.get("VELORA_DATA_DIR", os.path.dirname(__file__)), "users.json")
 _SECRET_KEY   = os.environ.get("VELORA_SECRET", secrets.token_hex(32))
 _ALGORITHM    = "HS256"
 _TOKEN_TTL    = 60 * 60 * 24  # 24 hours

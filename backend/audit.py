@@ -8,7 +8,8 @@ import json
 import time
 from typing import List, Dict, Any
 
-_LOG_FILE = os.path.join(os.path.dirname(__file__), "velora_audit.log")
+_DATA_DIR = os.environ.get("VELORA_DATA_DIR", os.path.dirname(__file__))
+_LOG_FILE = os.path.join(_DATA_DIR, "velora_audit.log")
 
 
 # ---------------------------------------------------------------------------
