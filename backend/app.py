@@ -16,13 +16,17 @@ from auth import register, login, require_auth, google_auth_url, google_exchange
 from audit import log_event, recent_events, analytics_summary
 from ai_service import transcribe, summarize, search_hub, recommend, voice_to_text
 
-FFMPEG_PATH = r"C:\Users\sc813\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-8.1.1-full_build\bin"
+# Auto-detect ffmpeg location — Railway installs it via nixpacks, Windows has it in PATH or custom location
+FFMPEG_PATH = os.getenv("FFMPEG_PATH") or None  # None = let yt-dlp auto-detect from PATH
 
 BASE_OPTS = {
     "quiet": True,
-    "ffmpeg_location": FFMPEG_PATH,
     "extractor_args": {"youtube": {"player_client": ["android_vr"]}},
 }
+
+# Only set ffmpeg_location if explicitly provided (for Windows dev environments)
+if FFMPEG_PATH:
+    BASE_OPTS["ffmpeg_location"] = FFMPEG_PATH
 
 # Rate-limit backoff: wait this many seconds before retrying on throttle
 RATE_LIMIT_BACKOFF = [5, 15, 45]
@@ -951,7 +955,11 @@ async def ai_voice_search(request):
 middleware = [
     Middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:3000"],
+        allow_origins=[
+            "http://localhost:3000",
+            os.environ.get("FRONTEND_URL", ""),
+        ],
+        allow_origin_regex=r"https://.*\.railway\.app",
         allow_methods=["GET", "POST", "OPTIONS"],
         allow_headers=["*", "Authorization"],
         allow_credentials=True,
