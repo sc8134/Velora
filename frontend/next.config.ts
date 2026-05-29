@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Skip ESLint during production build (lint locally instead)
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Allow images from Google favicon service and thumbnails
   images: {
     remotePatterns: [
