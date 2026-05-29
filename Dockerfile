@@ -24,6 +24,7 @@ COPY backend/ ./backend/
 
 RUN mkdir -p /data && chmod 777 /data
 ENV VELORA_DATA_DIR=/data
+ENV PYTHONPATH=/app/backend
 
 EXPOSE 8000
 
