@@ -16,14 +16,23 @@ from auth import register, login, require_auth, google_auth_url, google_exchange
 from audit import log_event, recent_events, analytics_summary
 from ai_service import transcribe, summarize, search_hub, recommend, voice_to_text
 
-# Auto-detect ffmpeg location — Railway installs it via nixpacks, Windows has it in PATH or custom location
-FFMPEG_PATH = os.getenv("FFMPEG_PATH") or None  # None = let yt-dlp auto-detect from PATH
+# Auto-detect ffmpeg location
+FFMPEG_PATH = os.getenv("FFMPEG_PATH") or None
+
+# Write YouTube cookies from env var to a temp file if provided
+_COOKIES_FILE = None
+_YT_COOKIES_ENV = os.environ.get("YOUTUBE_COOKIES", "").strip()
+if _YT_COOKIES_ENV:
+    import tempfile as _tf
+    _cf = _tf.NamedTemporaryFile(mode="w", suffix=".txt", delete=False)
+    _cf.write(_YT_COOKIES_ENV)
+    _cf.close()
+    _COOKIES_FILE = _cf.name
 
 BASE_OPTS = {
     "quiet": True,
     "extractor_args": {
         "youtube": {
-            # tv_embedded bypasses bot detection on server IPs without cookies
             "player_client": ["tv_embedded", "web_creator", "android_vr"],
         }
     },
@@ -32,9 +41,11 @@ BASE_OPTS = {
     },
 }
 
-# Only set ffmpeg_location if explicitly provided (for Windows dev environments)
 if FFMPEG_PATH:
     BASE_OPTS["ffmpeg_location"] = FFMPEG_PATH
+
+if _COOKIES_FILE:
+    BASE_OPTS["cookiefile"] = _COOKIES_FILE
 
 # Rate-limit backoff: wait this many seconds before retrying on throttle
 RATE_LIMIT_BACKOFF = [5, 15, 45]
