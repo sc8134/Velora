@@ -12,23 +12,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip + setuptools + wheel
+# Upgrade pip + setuptools
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Install openai-whisper FIRST with --no-build-isolation
-# (avoids the pkg_resources missing error in pip's isolated build sandbox)
-RUN pip install --no-cache-dir --no-build-isolation openai-whisper==20231117
-
-# Install PyTorch CPU-only AFTER whisper
-RUN pip install --no-cache-dir \
-    torch==2.2.2 \
-    torchaudio==2.2.2 \
-    --index-url https://download.pytorch.org/whl/cpu
-
-# Install remaining dependencies
+# Install all dependencies (faster-whisper is a pre-built wheel — no compilation)
 COPY requirements.txt .
-RUN grep -v "openai-whisper" requirements.txt > requirements_filtered.txt \
-    && pip install --no-cache-dir -r requirements_filtered.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy backend source
 COPY backend/ ./backend/

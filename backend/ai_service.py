@@ -13,50 +13,44 @@ import subprocess
 from typing import List, Dict, Any
 
 # ---------------------------------------------------------------------------
-# Whisper — lazy-loaded so startup isn't slow if unused
+# Whisper — lazy-loaded via faster-whisper (pre-built wheel, no compilation)
 # ---------------------------------------------------------------------------
 _whisper_model = None
 
 def _get_whisper(model_size: str = "base"):
     global _whisper_model
     if _whisper_model is None:
-        import whisper
-        _whisper_model = whisper.load_model(model_size)
+        from faster_whisper import WhisperModel
+        # cpu + int8 = smallest memory footprint for free tier
+        _whisper_model = WhisperModel(model_size, device="cpu", compute_type="int8")
     return _whisper_model
 
 
-def transcribe(audio_path: str, language: str = None, fmt: str = "srt") -> Dict[str, Any]:
-    """
-    Transcribe an audio/video file using Whisper.
-    Returns { text, segments, srt, vtt }
-    fmt: "srt" | "vtt" | "txt"
-    """
+def transcribe(audio_path: str, language: str = None, fmt: str = "srt") -> dict:
     model = _get_whisper()
-    opts = {"task": "transcribe"}
-    if language:
-        opts["language"] = language
-
-    result = model.transcribe(audio_path, **opts)
-    segments = result.get("segments", [])
-
-    srt  = _segments_to_srt(segments)
-    vtt  = _segments_to_vtt(segments)
-    text = result.get("text", "").strip()
-
+    segments_gen, info = model.transcribe(
+        audio_path,
+        language=language,
+        task="transcribe",
+    )
+    segments = [
+        {"start": s.start, "end": s.end, "text": s.text}
+        for s in segments_gen
+    ]
+    text = " ".join(s["text"].strip() for s in segments)
     return {
         "text":     text,
         "segments": segments,
-        "srt":      srt,
-        "vtt":      vtt,
-        "language": result.get("language"),
+        "srt":      _segments_to_srt(segments),
+        "vtt":      _segments_to_vtt(segments),
+        "language": info.language,
     }
 
 
 def voice_to_text(audio_path: str) -> str:
-    """Transcribe a short voice clip and return the plain text (for search)."""
-    model = _get_whisper("tiny")  # tiny is fastest for short clips
-    result = model.transcribe(audio_path, task="transcribe")
-    return result.get("text", "").strip()
+    model = _get_whisper("tiny")
+    segments_gen, _ = model.transcribe(audio_path, task="transcribe")
+    return " ".join(s.text.strip() for s in segments_gen)
 
 
 # ---------------------------------------------------------------------------

@@ -11,9 +11,8 @@ PyJWT==2.8.0
 python-dotenv==1.0.1
 requests==2.31.0
 
-# AI / transcription
-# torch is installed separately in Dockerfile (CPU-only slim build)
-openai-whisper==20231117
+# AI / transcription — faster-whisper is a pre-built wheel (no compilation issues)
+faster-whisper==1.0.3
 
 # Scheduler
 APScheduler==3.10.4
