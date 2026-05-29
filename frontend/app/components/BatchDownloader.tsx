@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 const VIDEO_QUALITIES = [
   { label: "Best",  quality: "best" },
   { label: "1080p", quality: "1080" },
@@ -67,7 +69,7 @@ export default function BatchDownloader() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/batch", {
+      const res = await fetch(`${API}/api/batch`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

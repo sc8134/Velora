@@ -3,6 +3,8 @@ import { useState, useRef } from "react";
 import ShazamTool from "./ShazamTool";
 import PlatformIcon from "./PlatformIcon";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 interface SearchResult {
   platform: string;
   title: string;
@@ -71,7 +73,7 @@ export default function SearchHub({ onSelectUrl }: Props) {
     setLoading(true);
     setResults(null);
     try {
-      const res = await fetch("http://localhost:8000/api/ai/search", {
+      const res = await fetch(`${API}/api/ai/search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,7 +104,7 @@ export default function SearchHub({ onSelectUrl }: Props) {
         const form = new FormData();
         form.append("audio", blob, "voice.webm");
         try {
-          const res = await fetch("http://localhost:8000/api/ai/voice-search", { method: "POST", body: form });
+          const res = await fetch(`${API}/api/ai/voice-search`, { method: "POST", body: form });
           const data = await res.json();
           if (data.query) { setQuery(data.query); handleSearch(data.query); }
         } catch { setError("Voice search failed."); }

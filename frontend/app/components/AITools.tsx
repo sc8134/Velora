@@ -2,6 +2,8 @@
 import { useState } from "react";
 import ShazamTool from "./ShazamTool";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 type AITab = "transcribe" | "summarize" | "recommend" | "shazam";
 
 interface Recommendation {
@@ -40,7 +42,7 @@ export default function AITools({ onSelectUrl }: Props) {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000${endpoint}`, {
+      const res = await fetch(`${API}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

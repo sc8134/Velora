@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { VideoInfo } from "../types";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 export type { VideoInfo };
 
 interface Props {
@@ -27,7 +29,7 @@ export default function DownloadForm({ onResult, prefillUrl }: Props) {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/formats", {
+      const res = await fetch(`${API}/api/formats`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: fetchUrl }),

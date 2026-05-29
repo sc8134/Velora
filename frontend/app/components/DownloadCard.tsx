@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { VideoInfo, DownloadOption, Profile } from "../types";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 function formatDuration(s: number) {
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
@@ -56,7 +58,7 @@ export default function DownloadCard({ video, onEnqueue }: Props) {
     try {
       if (useQueue) {
         // Enqueue job
-        const res = await fetch("http://localhost:8000/api/jobs/enqueue", {
+        const res = await fetch(`${API}/api/jobs/enqueue`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(buildBody(opt)),
@@ -72,7 +74,7 @@ export default function DownloadCard({ video, onEnqueue }: Props) {
       }
 
       // Direct download
-      const res = await fetch("http://localhost:8000/api/download/file", {
+      const res = await fetch(`${API}/api/download/file`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(buildBody(opt)),

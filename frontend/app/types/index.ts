@@ -31,7 +31,7 @@ export interface VideoInfo {
 
 export interface Job {
   id: string;
-  status: "pending" | "running" | "done" | "error";
+  status: "pending" | "running" | "retrying" | "done" | "error";
   progress: number;
   message: string;
   filename: string | null;

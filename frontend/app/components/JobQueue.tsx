@@ -2,6 +2,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { Job } from "../types";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 interface JobWithRetry extends Job {
   retries: number;
   max_retries: number;
@@ -15,7 +17,7 @@ export default function JobQueue() {
 
   const fetchJobs = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/jobs");
+      const res = await fetch(`${API}/api/jobs`);
       const data = await res.json();
       setJobs(data.jobs ?? []);
     } catch { /* backend not reachable */ }
@@ -31,7 +33,7 @@ export default function JobQueue() {
 
   const handleDownload = async (job: JobWithRetry) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/jobs/${job.id}/download`);
+      const res = await fetch(`${API}/api/jobs/${job.id}/download`);
       if (!res.ok) { alert("File not ready"); return; }
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -45,7 +47,7 @@ export default function JobQueue() {
 
   const handleRetry = async (job: JobWithRetry) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/jobs/${job.id}/retry`, { method: "POST" });
+      const res = await fetch(`${API}/api/jobs/${job.id}/retry`, { method: "POST" });
       if (!res.ok) { const d = await res.json(); alert(d.error); return; }
       fetchJobs();
     } catch { alert("Could not connect to backend."); }

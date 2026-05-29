@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 interface Summary {
   total_events: number;
   total_downloads: number;
@@ -22,7 +24,7 @@ export default function Analytics() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("http://localhost:8000/api/analytics", {
+      const res = await fetch(`${API}/api/analytics`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       const data = await res.json();

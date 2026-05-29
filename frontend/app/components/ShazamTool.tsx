@@ -1,6 +1,8 @@
 "use client";
 import { useState, useRef, useCallback } from "react";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 interface ShazamResult {
   match: boolean;
   title?: string;
@@ -47,7 +49,7 @@ export default function ShazamTool({ onSelectUrl }: Props) {
     try {
       const form = new FormData();
       form.append("audio", blob, "clip.webm");
-      const res = await fetch("http://localhost:8000/api/ai/shazam", {
+      const res = await fetch(`${API}/api/ai/shazam`, {
         method: "POST",
         body: form,
       });
