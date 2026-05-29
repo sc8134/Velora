@@ -957,9 +957,10 @@ middleware = [
         CORSMiddleware,
         allow_origins=[
             "http://localhost:3000",
+            "http://localhost:3001",
             os.environ.get("FRONTEND_URL", ""),
         ],
-        allow_origin_regex=r"https://.*\.railway\.app",
+        allow_origin_regex=r"https://.*\.(vercel\.app|sagarrc\.com\.np|onrender\.com)",
         allow_methods=["GET", "POST", "OPTIONS"],
         allow_headers=["*", "Authorization"],
         allow_credentials=True,
