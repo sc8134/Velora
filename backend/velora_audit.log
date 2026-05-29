@@ -1,0 +1,21 @@
+{"ts": 1779994179.7337673, "event": "fetch_info", "user": "anonymous", "details": {"url": "https://youtu.be/PY2h252XWZ4?si=qGa1ntJSaovrTWIX"}}
+{"ts": 1779994185.4619153, "event": "download_start", "user": "anonymous", "details": {"url": "https://www.youtube.com/watch?v=PY2h252XWZ4", "type": "video", "ext": "mp4"}}
+{"ts": 1779994199.1976793, "event": "download_done", "user": "anonymous", "details": {"filename": "Chatta Rumal Kyamalu - Nepali Movie Aafno Manchhe Song \uff5c\uff5c Shree Krishna Shrestha, Niruta Singh.mp4"}}
+{"ts": 1779994687.0401976, "event": "job_enqueue", "user": "anonymous", "details": {"job_id": "0ea7b5f9-f13b-4d6b-a54b-54e02c995524", "url": "https://www.youtube.com/watch?v=PY2h252XWZ4"}}
+{"ts": 1779994693.7867482, "event": "job_done", "user": "anonymous", "details": {"job_id": "0ea7b5f9-f13b-4d6b-a54b-54e02c995524", "filename": "Chatta Rumal Kyamalu - Nepali Movie Aafno Manchhe Song \uff5c\uff5c Shree Krishna Shrestha, Niruta Singh.mp3"}}
+{"ts": 1779994998.029968, "event": "ai_search", "user": "anonymous", "details": {"query": "naal nachna", "sources": ["youtube", "soundcloud", "reddit"]}}
+{"ts": 1779995018.1124477, "event": "fetch_info", "user": "anonymous", "details": {"url": "https://www.youtube.com/watch?v=TFTnJzWRTJ8"}}
+{"ts": 1779996476.641106, "event": "ai_voice_search", "user": "anonymous", "details": {}}
+{"ts": 1779996486.0632253, "event": "ai_voice_search", "user": "anonymous", "details": {}}
+{"ts": 1779996565.4037302, "event": "ai_search", "user": "anonymous", "details": {"query": "one", "sources": ["youtube", "soundcloud", "bilibili", "odysee", "dailymotion", "vimeo", "nicovideo", "twitch", "rumble", "reddit"]}}
+{"ts": 1779996637.740709, "event": "fetch_info", "user": "anonymous", "details": {"url": "http://www.bilibili.com/video/av276209744"}}
+{"ts": 1779996999.2579098, "event": "ai_transcribe", "user": "anonymous", "details": {"url": "https://youtu.be/ow77NqggH-0?si=wfv36oG8Um7Q6Id2"}}
+{"ts": 1780047292.3512778, "event": "ai_voice_search", "user": "anonymous", "details": {}}
+{"ts": 1780047315.967514, "event": "ai_voice_search", "user": "anonymous", "details": {}}
+{"ts": 1780047325.4870734, "event": "ai_search", "user": "anonymous", "details": {"query": "All Bueno, for anyone who's mi ll I Da Inj your provide for a finding a", "sources": ["youtube", "soundcloud", "bilibili", "odysee", "dailymotion", "vimeo", "reddit"]}}
+{"ts": 1780048902.0953856, "event": "ai_shazam", "user": "anonymous", "details": {"size_bytes": 155694}}
+{"ts": 1780049189.198013, "event": "ai_shazam", "user": "anonymous", "details": {"size_bytes": 156339}}
+{"ts": 1780049205.7884526, "event": "ai_shazam", "user": "anonymous", "details": {"size_bytes": 155374}}
+{"ts": 1780049223.6048586, "event": "ai_shazam", "user": "anonymous", "details": {"size_bytes": 155694}}
+{"ts": 1780049712.3227715, "event": "ai_shazam", "user": "anonymous", "details": {"size_bytes": 155694}}
+{"ts": 1780051045.8949723, "event": "fetch_info", "user": "anonymous", "details": {"url": "https://youtu.be/R_YpSP3hu5s?si=ezQ33Tt6KGmvu_Ja"}}
