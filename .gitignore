@@ -1,0 +1,44 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+backend/venv/
+.venv/
+env/
+
+# ── Secrets — NEVER commit these ────────────────────────────────────────────
+backend/.env
+.env
+.env.*
+!.env.example
+
+# ── Logs & data ──────────────────────────────────────────────────────────────
+*.log
+backend/velora_audit.log
+backend/users.json
+
+# ── Node / Next.js ───────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.suo
+*.user
