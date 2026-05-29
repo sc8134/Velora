@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Allow images from Google favicon service and any domain for thumbnails
+  // Skip ESLint during production build (lint locally instead)
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Allow images from Google favicon service and thumbnails
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "www.google.com" },
@@ -10,7 +14,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.scdn.co" },
     ],
   },
-  // Expose backend URL to the browser
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000",
   },
