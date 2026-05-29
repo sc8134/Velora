@@ -199,16 +199,8 @@ export default function Home() {
 
   const openAuth = (mode: "login" | "register") => { setAuthMode(mode); setShowAuth(true); };
   const handleSelectUrl = (url: string) => { setPrefillUrl(url); setTab("single"); };
+  // Show all tabs to guests except analytics (admin only)
   const visibleNav = NAV_ITEMS.filter(n => !n.adminOnly || user?.role === "admin");
-
-  if (!user) {
-    return (
-      <>
-        <LandingGate onOpen={openAuth} />
-        {showAuth && <AuthModal initialMode={authMode} onClose={() => setShowAuth(false)} />}
-      </>
-    );
-  }
 
   return (
     <div className="flex h-screen bg-[#07070f] text-white overflow-hidden">
@@ -289,25 +281,38 @@ export default function Home() {
         {/* User */}
         <div className={`border-t border-white/[0.06] p-3 ${!sidebarOpen && "flex justify-center"}`}>
           <div className={`flex items-center gap-2 ${!sidebarOpen && "justify-center"}`}>
-            {user.picture ? (
-              <img src={user.picture} alt=""
-                   className="w-7 h-7 rounded-full border border-violet-500/30 shrink-0
-                              ring-2 ring-violet-500/10" />
+            {user ? (
+              <>
+                {user.picture ? (
+                  <img src={user.picture} alt=""
+                       className="w-7 h-7 rounded-full border border-violet-500/30 shrink-0
+                                  ring-2 ring-violet-500/10" />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-600/60 to-teal-600/40
+                                  border border-violet-500/30 flex items-center justify-center
+                                  text-xs font-bold text-violet-300 shrink-0">
+                    {user.username[0].toUpperCase()}
+                  </div>
+                )}
+                {sidebarOpen && (
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-semibold text-white truncate">{user.username}</p>
+                    <button onClick={logout}
+                            className="text-[10px] text-white/30 hover:text-red-400 transition">
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-600/60 to-teal-600/40
-                              border border-violet-500/30 flex items-center justify-center
-                              text-xs font-bold text-violet-300 shrink-0">
-                {user.username[0].toUpperCase()}
-              </div>
-            )}
-            {sidebarOpen && (
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-white truncate">{user.username}</p>
-                <button onClick={logout}
-                        className="text-[10px] text-white/30 hover:text-red-400 transition">
-                  Sign out
-                </button>
-              </div>
+              <button
+                onClick={() => openAuth("login")}
+                className="btn-rainbow w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs
+                           text-white/70 hover:text-white transition group"
+              >
+                <span className="text-base shrink-0">⊙</span>
+                {sidebarOpen && <span>Sign in</span>}
+              </button>
             )}
           </div>
         </div>
