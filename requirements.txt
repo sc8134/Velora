@@ -2,8 +2,8 @@
 starlette==0.36.3
 uvicorn==0.29.0
 
-# Downloader
-yt-dlp>=2025.1.1
+# Downloader — always use latest for YouTube bot detection fixes
+yt-dlp
 
 # Auth
 bcrypt==4.1.3

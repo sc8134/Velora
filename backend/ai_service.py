@@ -136,7 +136,8 @@ def summarize(text: str, max_sentences: int = 5) -> str:
 # ---------------------------------------------------------------------------
 
 # Every yt-dlp search prefix that works without authentication
-SEARCH_EXTRACTORS = {
+_YT_EXTRACTOR_ARGS = {"youtube": {"player_client": ["tv_embedded", "web_creator", "android_vr"]}}
+_YT_HEADERS = {"User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36"}
     "youtube":    "ytsearch",
     "soundcloud": "scsearch",
     "bilibili":   "bilisearch",
@@ -195,7 +196,8 @@ def _probe_url(url: str) -> List[Dict]:
         "quiet": True,
         "skip_download": True,
         "extract_flat": "in_playlist",
-        "extractor_args": {"youtube": {"player_client": ["android_vr"]}},
+        "extractor_args": _YT_EXTRACTOR_ARGS,
+        "http_headers": _YT_HEADERS,
     }
     try:
         with yt_dlp.YoutubeDL(opts) as ydl:
@@ -240,7 +242,8 @@ def _search_yt_dlp(search_query: str, platform: str) -> List[Dict]:
         "quiet": True,
         "skip_download": True,
         "extract_flat": True,
-        "extractor_args": {"youtube": {"player_client": ["android_vr"]}},
+        "extractor_args": _YT_EXTRACTOR_ARGS,
+        "http_headers": _YT_HEADERS,
     }
     try:
         with yt_dlp.YoutubeDL(opts) as ydl:

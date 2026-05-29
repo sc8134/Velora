@@ -21,7 +21,15 @@ FFMPEG_PATH = os.getenv("FFMPEG_PATH") or None  # None = let yt-dlp auto-detect 
 
 BASE_OPTS = {
     "quiet": True,
-    "extractor_args": {"youtube": {"player_client": ["android_vr"]}},
+    "extractor_args": {
+        "youtube": {
+            # tv_embedded bypasses bot detection on server IPs without cookies
+            "player_client": ["tv_embedded", "web_creator", "android_vr"],
+        }
+    },
+    "http_headers": {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+    },
 }
 
 # Only set ffmpeg_location if explicitly provided (for Windows dev environments)
